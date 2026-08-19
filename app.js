@@ -15,7 +15,7 @@
     capturedImageBase64: null,
     mediaStream: null,
     facingMode: 'user', // 'user' (front) or 'environment' (back)
-    apiUrl: 'https://script.google.com/macros/s/AKfycbyrUeDCMBX0CPwpjeJ7wuqowiIA3al3951IO1_X7wmcIejY1-YZV8VXdzMAScNfm8aK/exec',
+    apiUrl: 'https://script.google.com/macros/s/AKfycbwQKXoyj9L8sEgSoDH1rMnvaLL4UjvGkyO8TeEBB9d222Vl9uqHm4Qz_AWuozatArVF1g/exec',
     isDemoMode: localStorage.getItem('gas_attendance_demo_mode') === 'true',
     isSubmitting: false
   };
