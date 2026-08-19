@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Debugiz Attendance Portal</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Favicon placeholder icon -->
+  <link rel="icon" href="images/debugiz-logo.png">
+</head>
+<body>
+
+  <!-- Background Decorative Blurs -->
+  <div class="bg-blur blur-1"></div>
+  <div class="bg-blur blur-2"></div>
+
+  <div class="app-container">
+
+    <!-- Header Section -->
+    <header class="app-header">
+      <div class="header-left">
+        <div class="company-logo">
+          <img src="images/debugiz-logo.png" alt="Debugiz Technologies" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'font-weight:bold;color:#6366f1;font-size:1.2rem;\'>DT</span>';">
+        </div>
+
+        <div class="header-titles">
+          <h2 class="company-name">DEBUGIZ TECHNOLOGIES</h2>
+          <h1>Attendance Management Portal</h1>
+          <p class="subtitle">
+            Secure Employee Check-In & Check-Out Portal
+          </p>
+        </div>
+      </div>
+      <button id="btnOpenConfig" class="btn-icon" title="Configure Backend API URL">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Main Card Container -->
+    <main class="card main-card">
+
+      <!-- Form Notification / Alert -->
+      <div id="statusAlert" class="alert hidden">
+        <span id="alertText"></span>
+      </div>
+
+      <form id="attendanceForm" autocomplete="off" onsubmit="return false;">
+
+        <!-- Section 1: Employee Credentials -->
+        <div class="form-group">
+          <label for="employeeName" class="form-label">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            Employee Name <span class="required">*</span>
+          </label>
+          <input type="text" id="employeeName" class="form-input" placeholder="e.g. John Doe" required>
+        </div>
+
+        <div class="form-group">
+          <label for="employeeId" class="form-label">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"></rect><line x1="7" y1="8" x2="17" y2="8"></line><line x1="7" y1="12" x2="13" y2="12"></line><line x1="7" y1="16" x2="9" y2="16"></line></svg>
+            Employee ID <span class="required">*</span>
+          </label>
+          <input type="text" id="employeeId" class="form-input" placeholder="e.g. EMP-1042" required>
+        </div>
+
+        <!-- Section 2: Status Toggle -->
+        <div class="form-group">
+          <label class="form-label">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            Attendance Status <span class="required">*</span>
+          </label>
+          
+          <div class="status-toggle-group">
+            <button type="button" id="btnCheckIn" class="status-btn btn-check-in">
+              <span class="status-icon">✅</span>
+              <span class="status-text">Check In</span>
+            </button>
+
+            <button type="button" id="btnCheckOut" class="status-btn btn-check-out">
+              <span class="status-icon">✅</span>
+              <span class="status-text">Check Out</span>
+            </button>
+          </div>
+          <input type="hidden" id="attendanceStatus" value="">
+        </div>
+
+        <!-- Section 3: Live Selfie Capture -->
+        <div class="form-group">
+          <label class="form-label">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+            Live Selfie Capture <span class="required">*</span>
+            <span class="badge-live">LIVE ONLY</span>
+          </label>
+
+          <!-- Camera Stream Container -->
+          <div id="cameraBox" class="camera-box">
+            <video id="webcamVideo" autoplay playsinline muted></video>
+            <canvas id="snapshotCanvas" class="hidden"></canvas>
+            
+            <!-- Framing Guide Overlay -->
+            <div id="cameraOverlay" class="camera-overlay">
+              <div class="face-guide"></div>
+              <p class="camera-instruction">Position your face inside the circle</p>
+            </div>
+
+            <!-- Flash effect element -->
+            <div id="shutterFlash" class="shutter-flash"></div>
+
+            <!-- Front/Rear Camera Flip Button -->
+            <button type="button" id="btnFlipCamera" class="btn-flip" title="Switch Camera">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0-4.4-3.6-8-8-8s-8 3.6-8 8h-3l4 4 4-4h-3c0-3.3 2.7-6 6-6s6 2.7 6 6-2.7 6-6 6c-1.1 0-2.1-.3-3-.8l-1.5 1.5c1.3.8 2.8 1.3 4.5 1.3 4.4 0 8-3.6 8-8z"/></svg>
+            </button>
+          </div>
+
+          <!-- Captured Photo Preview Container -->
+          <div id="previewBox" class="preview-box hidden">
+            <img id="selfiePreview" src="" alt="Captured Selfie Preview">
+            <div class="preview-badge">✓ Selfie Captured</div>
+          </div>
+
+          <!-- Camera Controls -->
+          <div class="camera-actions">
+            <button type="button" id="btnStartCamera" class="btn-secondary">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+              Open Camera
+            </button>
+
+            <button type="button" id="btnCaptureSelfie" class="btn-primary btn-capture hidden">
+              <span class="shutter-dot"></span>
+              Capture Selfie
+            </button>
+
+            <button type="button" id="btnRetakeSelfie" class="btn-secondary hidden">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+              Retake Photo
+            </button>
+          </div>
+        </div>
+
+        <!-- Section 4: Read-Only Automatic Timestamp -->
+        <div class="form-group">
+          <label class="form-label">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            Automatic Current Time (Captured upon submission)
+          </label>
+          <div class="timestamp-display-box">
+            <div class="time-item">
+              <span class="time-label">Date:</span>
+              <span id="displayDate" class="time-value">--</span>
+            </div>
+            <div class="time-divider">|</div>
+            <div class="time-item">
+              <span class="time-label">Time:</span>
+              <span id="displayTime" class="time-value">--</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 5: Dynamic Validation Checklist -->
+        <div id="validationBox" class="validation-checklist">
+          <div class="val-item" id="valName"><span class="val-icon">❌</span> Employee Name</div>
+          <div class="val-item" id="valId"><span class="val-icon">❌</span> Employee ID</div>
+          <div class="val-item" id="valStatus"><span class="val-icon">❌</span> Check In / Check Out</div>
+          <div class="val-item" id="valSelfie"><span class="val-icon">❌</span> Live Selfie Captured</div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="button" id="btnSubmitAttendance" class="btn-submit" disabled>
+          <span id="submitSpinner" class="spinner hidden"></span>
+          <span id="submitText">Submit Attendance</span>
+        </button>
+
+      </form>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>Secure Employee Attendance Portal &bull; Encrypted & Live Verification</p>
+    </footer>
+
+  </div>
+
+  <!-- Success Modal -->
+  <div id="successModal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-icon-success">
+        <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <h2>Attendance Recorded!</h2>
+      <p class="modal-desc">Your attendance entry has been saved successfully.</p>
+
+      <!-- Dynamic Status Result Banner -->
+      <div id="resultBanner" class="result-banner hidden">
+        <span id="resultBannerIcon">💡</span>
+        <span id="resultBannerText"></span>
+      </div>
+      
+      <div class="summary-box">
+        <div class="summary-row">
+          <span>Employee:</span>
+          <strong id="sumName">-</strong>
+        </div>
+        <div class="summary-row">
+          <span>Employee ID:</span>
+          <strong id="sumId">-</strong>
+        </div>
+        <div class="summary-row">
+          <span>Status:</span>
+          <strong id="sumStatus" class="badge-status">-</strong>
+        </div>
+        <div class="summary-row">
+          <span>Recorded At:</span>
+          <strong id="sumTime">-</strong>
+        </div>
+
+        <!-- Check Out Working Hours & Compensation Metrics -->
+        <div id="checkOutSummaryGroup" class="checkout-metrics hidden">
+          <div class="summary-row">
+            <span>Check In Time:</span>
+            <strong id="sumCheckInTime">-</strong>
+          </div>
+          <div class="summary-row">
+            <span>Check Out Time:</span>
+            <strong id="sumCheckOutTime">-</strong>
+          </div>
+          <div class="summary-row">
+            <span>Total Working Hours:</span>
+            <strong id="sumWorkHours" class="metric-highlight">-</strong>
+          </div>
+          <div id="sumCompRow" class="summary-row hidden">
+            <span>Compensation Required:</span>
+            <strong id="sumCompTime" class="metric-warning">-</strong>
+          </div>
+          <div id="sumOvertimeRow" class="summary-row hidden">
+            <span>Overtime Earned:</span>
+            <strong id="sumOvertime" class="metric-success">-</strong>
+          </div>
+        </div>
+      </div>
+
+      <button id="btnCloseSuccessModal" class="btn-primary btn-full">Ready for Next Employee</button>
+    </div>
+  </div>
+
+  <!-- API URL Settings Modal -->
+  <div id="configModal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Backend API Settings</h3>
+        <button id="btnCloseConfigModal" class="btn-close">&times;</button>
+      </div>
+      
+      <p class="config-desc">
+        Enter your deployed <strong>Google Apps Script Web App URL</strong> below to send records directly to your Google Sheet and Google Drive.
+      </p>
+
+      <div class="form-group">
+        <label for="apiUrlInput" class="form-label">Google Apps Script Web App URL</label>
+        <input type="url" id="apiUrlInput" class="form-input" placeholder="https://script.google.com/macros/s/.../exec">
+      </div>
+
+      <div class="mode-toggle-box">
+        <label class="checkbox-label">
+          <input type="checkbox" id="chkDemoMode">
+          <span>Enable Local Demo Mode (Simulate API responses without Google Sheets)</span>
+        </label>
+      </div>
+
+      <div class="modal-actions">
+        <button id="btnSaveConfig" class="btn-primary btn-full">Save Configuration</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="app.js"></script>
+</body>
+</html>
